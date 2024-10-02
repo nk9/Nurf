@@ -7,12 +7,14 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
-
+class ViewController: NSViewController, DragViewDelegate {
+    @IBOutlet weak var dragView: DragView!
+    @IBOutlet weak var mainTextField: NSTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        dragView.delegate = self
     }
 
     override var representedObject: Any? {
@@ -21,6 +23,9 @@ class ViewController: NSViewController {
         }
     }
 
-
+    func dragViewDidReceive(fileURLs: [URL]) {
+        let printer = Printer()
+        printer.printURLs(fileURLs)
+    }
 }
 

@@ -10,11 +10,11 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
-
+    // MARK: - Delegate Methods
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        NSApp.activate()
+        print("applicationDidFinishLaunching")
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -22,9 +22,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
+        return false
     }
 
-
+    func application(_ application: NSApplication, open urls: [URL]) {
+        print("application(_:open:)")
+        let printer = Printer()
+        printer.printURLs(urls)
+    }
 }
 

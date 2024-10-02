@@ -25,8 +25,9 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
     }
 
     func dragViewDidReceive(fileURLs: [URL]) {
-        let printer = Printer()
-        printer.printURLs(fileURLs)
+        DispatchQueue.main.async() {
+            self.runPrintOperation(fileURLs)
+        }
     }
     
     @IBAction func chooseTurfPDFs(_ sender: Any) {
@@ -39,12 +40,17 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
         
         panel.runModal()
 
-        let printer = Printer()
-        printer.printURLs(panel.urls)
+        runPrintOperation(panel.urls)
+    }
+    
+    func runPrintOperation(_ fileURLs: [URL]) {
+        if let window = self.view.window {
+            let printer = Printer(window)
+            printer.printURLs(fileURLs)
+        }
     }
     
     func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
-        print(url)
         return url.pathExtension == "pdf"
     }
 }

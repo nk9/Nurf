@@ -9,57 +9,42 @@ import Foundation
 import PDFKit
 
 class Printer: NSObject {
+    weak var _window: NSWindow?
+    
+    required init(_ window: NSWindow) {
+        _window = window
+    }
+    
     func printURLs(_ urls: [URL]) {
+        let outDoc = PDFDocument()
+        
         for url in urls {
             if let doc = PDFDocument(url: url) {
-                print("Examining \(url)")
-                let newPDF = printablePDF(doc)
-                
-//                let tempPath = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, conformingTo: .pdf)
-//                newPDF.write(to: tempPath)
-                
-                printPDF(newPDF)
+                appendPrintablePages(fromDoc: doc, toDoc: outDoc)
             }
+        }
+        
+        if (outDoc.pageCount > 0){
+            printPDF(outDoc)
         }
     }
     
-    func printablePageIndexes(doc: PDFDocument) -> IndexSet {
-        var indexes = IndexSet()
+    func appendPrintablePages(fromDoc doc: PDFDocument, toDoc outDoc: PDFDocument) {
+        var nextOutIndex = outDoc.pageCount
         
         for i in 0...doc.pageCount {
             if let page = doc.page(at: i) {
                 if i == 0 {
-                    indexes.insert(i)
-                }
-                if page.string!.contains(/List \d{8}\-\d{5}/) {
-
-                    indexes.insert(i)
-                }
-            }
-        }
-        
-        return indexes
-    }
-    
-    func printablePDF(_ doc: PDFDocument) -> PDFDocument {
-        let outPDF = PDFDocument()
-        var nextOutIndex = 0
-        
-        for i in 0...doc.pageCount {
-            if let page = doc.page(at: i) {
-                if i == 0 {
-                    outPDF.insert(page, at: nextOutIndex)
+                    outDoc.insert(page, at: nextOutIndex)
                     nextOutIndex += 1
                 }
                 
                 if page.string!.contains(/List \d{8}\-\d{5}/) {
-                    outPDF.insert(page, at: nextOutIndex)
+                    outDoc.insert(page, at: nextOutIndex)
                     nextOutIndex += 1
                 }
             }
         }
-        
-        return outPDF
     }
     
     func printPDF(_ doc: PDFDocument) {
@@ -75,11 +60,26 @@ class Printer: NSObject {
         PMSetDuplex(printSettings, PMDuplexMode(kPMDuplexNone))
         printInfo.updateFromPMPrintSettings()
         
+        let pageFormat = PMPageFormat(printInfo.pmPageFormat())
+        PMSetOrientation(pageFormat, PMOrientation(kPMLandscape), false)
+        printInfo.updateFromPMPageFormat()
+        
         let scalingMode = PDFPrintScalingMode.pageScaleDownToFit
         let op = doc.printOperation(for: printInfo, scalingMode: scalingMode, autoRotate: true)
         
         op?.showsPrintPanel = true
         op?.showsProgressPanel = true
+        
         op?.run()
+
+        // if let window = _window {
+        //    op?.runModal(for: window, delegate: self, didRun: #selector(printOperationDidRun), contextInfo: nil)
+        // }
+    }
+    
+    @objc func printOperationDidRun( printOperation: NSPrintOperation,
+                                     success: Bool,
+                                     contextInfo: UnsafeMutableRawPointer?){
+        print("finished print op")
     }
 }

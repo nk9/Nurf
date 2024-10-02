@@ -706,36 +706,54 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Nurf" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="DragView" customModule="Nurf" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="219"/>
+                    <view key="view" id="m2S-Jp-Qdl">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="197"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v67-E6-7LA">
-                                <rect key="frame" x="114" y="140" width="253" height="29"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wxt-CO-WnP">
+                                <rect key="frame" x="168" y="150" width="152" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Drop turf PDF files here" id="qON-5K-ML0">
-                                    <font key="font" metaFont="system" size="25"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wee-Pm-BpL">
-                                <rect key="frame" x="218" y="44.5" width="44.5" height="54"/>
+                                <buttonCell key="cell" type="push" title="Choose turf PDFs…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2Kt-fA-TLM">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UDy-UM-ExP" customClass="DragView" customModule="Nurf" customModuleProvider="target">
+                                <rect key="frame" x="102" y="20" width="283" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="zcn-FH-c1M">
-                                    <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large" variableValue="1"/>
-                                </imageCell>
-                            </imageView>
+                                <subviews>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v67-E6-7LA">
+                                        <rect key="frame" x="19" y="68" width="245" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Or drop turf PDFs here" id="qON-5K-ML0">
+                                            <font key="font" metaFont="system" size="25"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wee-Pm-BpL">
+                                        <rect key="frame" x="119" y="15.5" width="44.5" height="54"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="zcn-FH-c1M">
+                                            <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large" variableValue="1"/>
+                                        </imageCell>
+                                    </imageView>
+                                </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="Ori-oy-m3s"/>
+                                </connections>
+                            </customView>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="dragView" destination="m2S-Jp-Qdl" id="3XF-fn-Agv"/>
+                        <outlet property="dropImageView" destination="wee-Pm-BpL" id="eSR-r4-hRe"/>
                         <outlet property="mainTextField" destination="v67-E6-7LA" id="t94-0t-X2L"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="629"/>
+            <point key="canvasLocation" x="75" y="617.5"/>
         </scene>
     </scenes>
     <resources>

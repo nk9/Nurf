@@ -10,13 +10,12 @@ import Cocoa
 class ViewController: NSViewController, DragViewDelegate {
     @IBOutlet weak var dragView: DragView!
     @IBOutlet weak var mainTextField: NSTextField!
+    @IBOutlet weak var dropImageView: NSImageView! {
+        didSet {
+            dropImageView.unregisterDraggedTypes()
+        }
+      }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        dragView.delegate = self
-    }
-
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.

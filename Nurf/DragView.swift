@@ -28,6 +28,10 @@ class DragView: NSView
         super.init(coder: coder)
         color(to: .clear)
         registerForDraggedTypes([.fileURL])
+        self.wantsLayer = true
+        self.layer?.cornerRadius = 10.0
+        self.layer?.borderWidth = 2.0
+        self.layer?.borderColor = #colorLiteral(red: 0.657, green: 0.687, blue: 0.718, alpha: 1.0)
     }
 
     override func draggingEntered(_ draggingInfo: NSDraggingInfo) -> NSDragOperation

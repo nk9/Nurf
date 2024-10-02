@@ -30,5 +30,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let printer = Printer()
         printer.printURLs(urls)
     }
+    
+    @IBAction func openAboutPanel(_ sender: Any) {
+        print("openAboutPanel")
+        
+        NSApp.orderFrontStandardAboutPanel(options: [
+            .credits: NSAttributedString(string:"By Nick Kocharhook\nRegion 4", attributes: [:])
+        ])
+    }
 }
 

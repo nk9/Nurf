@@ -42,7 +42,7 @@ class Printer: NSObject {
     }
     
     func printablePDF(_ doc: PDFDocument) -> PDFDocument {
-        var outPDF = PDFDocument()
+        let outPDF = PDFDocument()
         var nextOutIndex = 0
         
         for i in 0...doc.pageCount {

@@ -21,6 +21,7 @@ class DragView: NSView
     @IBOutlet weak var delegate: DragViewDelegate?
 
     let fileExtensions = ["pdf"]
+    let cornerRadius = 10.0
 
 
     required init?(coder: NSCoder)
@@ -28,12 +29,42 @@ class DragView: NSView
         super.init(coder: coder)
         color(to: .clear)
         registerForDraggedTypes([.fileURL])
+        
         self.wantsLayer = true
-        self.layer?.cornerRadius = 10.0
+        self.layer?.cornerRadius = cornerRadius
         self.layer?.borderWidth = 2.0
-        self.layer?.borderColor = #colorLiteral(red: 0.657, green: 0.687, blue: 0.718, alpha: 1.0)
+        self.layer?.borderColor = #colorLiteral(red: 0.777, green: 0.808, blue: 0.841, alpha: 1.0)
+        self.layer?.backgroundColor = .white
+    }
+    
+    override func layout() {
+        super.layout()
+        addInnerShadow()
     }
 
+    private func addInnerShadow() {
+        let innerShadow = CALayer()
+        innerShadow.cornerRadius = cornerRadius
+        
+        innerShadow.frame = bounds
+        
+        // Shadow path (1pt ring around bounds)
+        let path = NSBezierPath(rect: innerShadow.bounds.insetBy(dx: -1, dy: -1))
+        let cutout = NSBezierPath(rect: innerShadow.bounds).reversed
+        path.append(cutout)
+        innerShadow.shadowPath = path.cgPath
+        innerShadow.masksToBounds = true
+        
+        // Shadow properties
+        innerShadow.shadowColor = NSColor(white: 0, alpha: 1).cgColor
+        innerShadow.shadowOffset = CGSize.zero
+        innerShadow.shadowOpacity = 1
+        innerShadow.shadowRadius = 3
+        
+        // Add
+        self.layer?.addSublayer(innerShadow)
+    }
+    
     override func draggingEntered(_ draggingInfo: NSDraggingInfo) -> NSDragOperation
     {
         var containsMatchingFiles = false

@@ -28,7 +28,7 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
         runPrintOperation(fileURLs)
     }
     
-    @IBAction func chooseTurfPDFs(_ sender: Any) {
+    @IBAction func chooseTurfPDFs(_ sender: Any?) {
         let panel = NSOpenPanel()
 
         panel.delegate = self
@@ -57,5 +57,11 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
     
     func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
         return url.pathExtension == "pdf"
+    }
+    
+    @IBAction
+    func openDocument(_ sender: Any?)
+    {
+        chooseTurfPDFs(sender)
     }
 }

@@ -24,10 +24,8 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
         }
     }
 
-    func dragViewDidReceive(fileURLs: [URL]) {
-        DispatchQueue.main.async() {
-            self.runPrintOperation(fileURLs)
-        }
+    func dragViewDraggingEnded(fileURLs: [URL]) {
+        runPrintOperation(fileURLs)
     }
     
     @IBAction func chooseTurfPDFs(_ sender: Any) {
@@ -44,9 +42,16 @@ class ViewController: NSViewController, DragViewDelegate, NSOpenSavePanelDelegat
     }
     
     func runPrintOperation(_ fileURLs: [URL]) {
-        if let window = self.view.window {
-            let printer = Printer(window)
-            printer.printURLs(fileURLs)
+        dragView.enabled = false
+        chooseTurfButton.isEnabled = false
+
+        DispatchQueue.main.async() {
+            if let window = self.view.window {
+                let printer = Printer(window)
+                printer.printURLs(fileURLs)
+                self.dragView.enabled = true
+                self.chooseTurfButton.isEnabled = true
+            }
         }
     }
     

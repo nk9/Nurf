@@ -13,6 +13,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Delegate Methods
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // AppleEvents are being just as flaky. :-/
+//        let aem = NSAppleEventManager.shared();
+//        aem.setEventHandler(self,
+//                            andSelector: #selector(AppDelegate.handleOpenEvent(_:withReplyEvent:)),
+//                            forEventClass: AEEventClass(kCoreEventClass),
+//                            andEventID: AEEventID(kAEOpenDocuments))
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -23,8 +29,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func application(_ application: NSApplication, open urls: [URL]) {
-        print("application(_:open:)")
-        
         if let window = nurfWindowController.window {
             let printer = Printer(window)
             printer.printURLs(urls)
@@ -33,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func openAboutPanel(_ sender: Any) {
         NSApp.orderFrontStandardAboutPanel(options: [
-            .credits: NSAttributedString(string:"By Nick Kocharhook\nRegion 4", attributes: [:])
+            .credits: NSAttributedString(string:"By Nick Kocharhook\nMI, Region 4", attributes: nil)
         ])
     }
     

@@ -749,7 +749,7 @@
                     </view>
                     <connections>
                         <outlet property="chooseTurfButton" destination="Wxt-CO-WnP" id="YjH-LJ-7yo"/>
-                        <outlet property="dragView" destination="m2S-Jp-Qdl" id="3XF-fn-Agv"/>
+                        <outlet property="dragView" destination="UDy-UM-ExP" id="hJl-Un-B5X"/>
                         <outlet property="dropImageView" destination="wee-Pm-BpL" id="eSR-r4-hRe"/>
                         <outlet property="mainTextField" destination="v67-E6-7LA" id="t94-0t-X2L"/>
                     </connections>

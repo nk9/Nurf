@@ -77,9 +77,9 @@ class Printer: NSObject {
         // }
     }
     
-    @objc func printOperationDidRun( printOperation: NSPrintOperation,
-                                     success: Bool,
-                                     contextInfo: UnsafeMutableRawPointer?){
-        print("finished print op")
-    }
+//    @objc func printOperationDidRun( printOperation: NSPrintOperation,
+//                                     success: Bool,
+//                                     contextInfo: UnsafeMutableRawPointer?){
+//        print("finished print op")
+//    }
 }

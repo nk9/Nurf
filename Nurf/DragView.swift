@@ -12,7 +12,7 @@ import Cocoa
 
 @objc protocol DragViewDelegate
 {
-    func dragViewDidReceive(fileURLs: [URL])
+    func dragViewDraggingEnded(fileURLs: [URL])
 }
 
 
@@ -22,24 +22,44 @@ class DragView: NSView
 
     let fileExtensions = ["pdf"]
     let cornerRadius = 10.0
+    var draggedItems: [URL] = []
+    
+    var enabled: Bool = true {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
+    var backgroundColor: NSColor {
+        get {
+            if (enabled) {
+                return .white
+            } else {
+                return #colorLiteral(red: 0.86, green: 0.86, blue: 0.86, alpha: 1.0)
+            }
+        }
+    }
 
 
     required init?(coder: NSCoder)
     {
         super.init(coder: coder)
-        color(to: .clear)
         registerForDraggedTypes([.fileURL])
         
         self.wantsLayer = true
         self.layer?.cornerRadius = cornerRadius
         self.layer?.borderWidth = 2.0
         self.layer?.borderColor = #colorLiteral(red: 0.777, green: 0.808, blue: 0.841, alpha: 1.0)
-        self.layer?.backgroundColor = .white
     }
     
     override func layout() {
         super.layout()
         addInnerShadow()
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        color(to: backgroundColor)
+        super.draw(dirtyRect)
     }
 
     private func addInnerShadow() {
@@ -88,10 +108,28 @@ class DragView: NSView
                 return .init()
         }
     }
+    
+    override func prepareForDragOperation(_ sender: any NSDraggingInfo) -> Bool {
+        draggedItems = []
+        
+        return enabled
+    }
 
     override func performDragOperation(_ draggingInfo: NSDraggingInfo) -> Bool
     {
-        // Collect URLs.
+        let matchingFileURLs = matchingFiles(draggingInfo)
+        
+        // Only continue if any matched
+        guard matchingFileURLs.count > 0
+        else { return false }
+
+        // Save the dragged items
+        draggedItems = matchingFileURLs
+        return true
+    }
+    
+    func matchingFiles(_ draggingInfo: NSDraggingInfo) -> [URL] {
+        // Collect URLs
         var matchingFileURLs: [URL] = []
         draggingInfo.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: nil)?.forEach
         {
@@ -101,22 +139,19 @@ class DragView: NSView
                 fileExtensions.contains(eachURL.pathExtension.lowercased())
             { matchingFileURLs.append(eachURL) }
         }
-
-        // Only if any,
-        guard matchingFileURLs.count > 0
-        else { return false }
-
-        // Pass to delegate.
-        delegate?.dragViewDidReceive(fileURLs: matchingFileURLs)
-        return true
+        
+        return matchingFileURLs
     }
 
-    override func draggingExited(_ sender: NSDraggingInfo?)
-    { color(to: .clear) }
+    override func draggingExited(_ sender: NSDraggingInfo?) {
+        color(to: backgroundColor)
+    }
 
-    override func draggingEnded(_ sender: NSDraggingInfo)
-    { color(to: .clear) }
-
+    override func draggingEnded(_ sender: NSDraggingInfo) {
+        if draggedItems.count > 0 {
+            delegate?.dragViewDraggingEnded(fileURLs: draggedItems)
+        }
+    }
 }
 
 

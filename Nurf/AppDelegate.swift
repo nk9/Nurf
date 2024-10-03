@@ -40,8 +40,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func openAboutPanel(_ sender: Any) {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+
+        let credits = NSMutableAttributedString(string:"By Nick Kocharhook\nOne Campaign for Michigan\nRegion 4 (Lansing)\nGet the latest version",
+                                                attributes: [.paragraphStyle: paragraph])
+        let _ = credits.setAsLink(textToFind: "latest version", linkURL: "https://kocharhook.com/nick/Nurf/latest")
+        
         NSApp.orderFrontStandardAboutPanel(options: [
-            .credits: NSAttributedString(string:"By Nick Kocharhook\nMI, Region 4", attributes: nil)
+            .credits: credits
         ])
     }
     

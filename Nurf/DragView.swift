@@ -47,7 +47,7 @@ class DragView: NSView
     var backgroundColor: NSColor {
         get {
             if (enabled) {
-                return .white
+                return .secondarySystemFill
             } else {
                 return #colorLiteral(red: 0.86, green: 0.86, blue: 0.86, alpha: 1.0)
             }
@@ -63,7 +63,7 @@ class DragView: NSView
         self.wantsLayer = true
         self.layer?.cornerRadius = cornerRadius
         self.layer?.borderWidth = 2.0
-        self.layer?.borderColor = #colorLiteral(red: 0.777, green: 0.808, blue: 0.841, alpha: 1.0)
+        self.layer?.borderColor = #colorLiteral(red: 0.911, green: 0.934, blue: 0.958, alpha: 1.0)
     }
     
     override func layout() {
@@ -90,7 +90,7 @@ class DragView: NSView
         innerShadow.masksToBounds = true
         
         // Shadow properties
-        innerShadow.shadowColor = NSColor(white: 0, alpha: 1).cgColor
+        innerShadow.shadowColor = NSColor.textColor.cgColor
         innerShadow.shadowOffset = CGSize.zero
         innerShadow.shadowOpacity = 1
         innerShadow.shadowRadius = 3

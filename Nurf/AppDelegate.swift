@@ -13,12 +13,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Delegate Methods
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // AppleEvents are being just as flaky. :-/
-//        let aem = NSAppleEventManager.shared();
-//        aem.setEventHandler(self,
-//                            andSelector: #selector(AppDelegate.handleOpenEvent(_:withReplyEvent:)),
-//                            forEventClass: AEEventClass(kCoreEventClass),
-//                            andEventID: AEEventID(kAEOpenDocuments))
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

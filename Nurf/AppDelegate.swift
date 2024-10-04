@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let credits = NSMutableAttributedString(string:"By Nick Kocharhook\nOne Campaign for Michigan\nRegion 4 (Lansing)\nGet the latest version",
                                                 attributes: [.paragraphStyle: paragraph])
-        let _ = credits.setAsLink(textToFind: "latest version", linkURL: "https://kocharhook.com/nick/Nurf/latest")
+        let _ = credits.setAsLink(textToFind: "latest version", linkURL: "https://kocharhook.com/nick/Nurf/latest.php")
         
         NSApp.orderFrontStandardAboutPanel(options: [
             .credits: credits
